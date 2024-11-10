@@ -49,7 +49,9 @@ import java.util.Currency
 import java.util.Locale
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
-
+/**
+ *Objek ini mengimplementasikan `NavigationDestination` untuk menyediakan rute dan sumber daya judul bagi layar entri item.
+ */
 object ItemEntryDestination : NavigationDestination {
     override val route = "item_entry"
     override val titleRes = R.string.item_entry_title
@@ -78,16 +80,12 @@ fun ItemEntryScreen(
             onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.saveItem()
-                    navigateBack()
+                    viewModel.saveItem()    // Menyimpan item ke repository atau database
+                    navigateBack()          // Setelah item berhasil disimpan, navigasi kembali ke layar sebelumnya
                 }
             },
             modifier = Modifier
-                .padding(
-                    start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-                    top = innerPadding.calculateTopPadding()
-                )
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
         )
